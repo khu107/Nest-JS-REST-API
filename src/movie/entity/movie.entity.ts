@@ -30,6 +30,7 @@ export class Movie {
   @VersionColumn()
   version: number;
 }
+
 /*
 // @Exclude() - 노출 되고 싶지 않은 값들
 // @Expose() -  노출 되는 값들
