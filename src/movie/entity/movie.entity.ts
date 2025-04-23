@@ -2,11 +2,13 @@ import {
   Column,
   Entity,
   JoinColumn,
+  ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { BaseTable } from './base-table.entity';
+import { BaseTable } from '../../common/entity/base-table.entity';
 import { MovieDetail } from './movie-detail.entity';
+import { Director } from 'src/director/entity/director.entity';
 
 @Entity()
 export class Movie extends BaseTable {
@@ -25,10 +27,14 @@ export class Movie extends BaseTable {
   @JoinColumn()
   detail: MovieDetail;
 
-  // Enbeding 사용법
-  // @Column(() => BaseEntity)
-  // base: BaseEntity;
+  @ManyToOne(() => Director, (director) => director.id)
+  director: Director;
 }
+
+// Enbeding 사용법
+// @Column(() => BaseEntity)
+// base: BaseEntity;
+
 /*
 // @Exclude() - 노출 되고 싶지 않은 값들
 // @Expose() -  노출 되는 값들
