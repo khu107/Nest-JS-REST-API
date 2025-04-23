@@ -1,17 +1,15 @@
-// @Expose()
-// @Exclude()
-
 import {
   Column,
-  CreateDateColumn,
   Entity,
+  JoinColumn,
+  OneToOne,
   PrimaryGeneratedColumn,
-  UpdateDateColumn,
-  VersionColumn,
 } from 'typeorm';
+import { BaseTable } from './base-table.entity';
+import { MovieDetail } from './movie-detail.entity';
 
 @Entity()
-export class Movie {
+export class Movie extends BaseTable {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -21,16 +19,16 @@ export class Movie {
   @Column()
   genre: string;
 
-  @CreateDateColumn()
-  createdAt: Date;
+  @OneToOne(() => MovieDetail, (moviedetail) => moviedetail.id, {
+    cascade: true,
+  })
+  @JoinColumn()
+  detail: MovieDetail;
 
-  @UpdateDateColumn()
-  updatedAt: Date;
-
-  @VersionColumn()
-  version: number;
+  // Enbeding 사용법
+  // @Column(() => BaseEntity)
+  // base: BaseEntity;
 }
-
 /*
 // @Exclude() - 노출 되고 싶지 않은 값들
 // @Expose() -  노출 되는 값들
